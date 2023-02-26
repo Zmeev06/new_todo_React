@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { EditIcon } from '@chakra-ui/icons';
 
-function EditNote({ edit, id, note }) {
+function EditNote({ editNote, id, note }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [useNote, setUseNote] = useState({
@@ -31,7 +31,7 @@ function EditNote({ edit, id, note }) {
     } else if (useNote.importance === '') {
       alert('Choose Importance');
     } else {
-      edit(id, useNote.body, useNote.importance);
+      editNote(id, useNote.body, useNote.importance);
       onClose();
     }
   };

@@ -7,17 +7,22 @@ function App() {
   const [notes, setNotes] = useState([
     { id: 1, body: 'cdscd', importance: 'minor', completed: true },
   ]);
+  const [activeFilter, setActiveFilter] = useState('all');
 
-  const [filtered, setFiltered] = useState(notes)
+  const filteredNotes = () => {
+    return activeFilter === 'all'
+      ? notes
+      : notes.filter(item => item.completed === activeFilter);
+  };
 
   const createNote = (body, importance) => {
     setNotes([
       ...notes,
-      { id: Date.now(), body: body, importance: importance, completed: true },
+      { id: Date.now(), body: body, importance: importance, completed: false },
     ]);
   };
 
-  const completedNote = id => {
+  const changeCompleteStatus = id => {
     setNotes(
       notes.map(e => (e.id === id ? { ...e, completed: !e.completed } : e))
     );
@@ -31,26 +36,23 @@ function App() {
     );
   };
 
-  const setFilter = status => {
-    if (status === 'all') {
-      setFiltered(notes);
-    } else {
-      setFiltered([...notes].filter(n => n.completed === status));
-    }
-  };
-
   const removeNote = note => {
     setNotes(notes.filter(n => n.id !== note.id));
   };
 
   return (
     <ChakraProvider theme={theme}>
-      <Header counter={filtered.length} create={createNote} filter={setFilter} />
+      <Header
+        counter={filteredNotes().length}
+        create={createNote}
+        setFilter={setActiveFilter}
+        activeFilter={activeFilter}
+      />
       <NoteList
-        notes={filtered}
-        completed={completedNote}
-        edit={editNote}
-        remove={removeNote}
+        notes={filteredNotes()}
+        changeCompleteStatus={changeCompleteStatus}
+        editNote={editNote}
+        removeNote={removeNote}
       />
     </ChakraProvider>
   );

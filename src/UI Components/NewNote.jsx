@@ -37,7 +37,7 @@ function NewNote ({create}) {
 
     return (
       <>
-        <Button display="flex" justifyContent="space-around" w="140px" size="md" mt="3" colorScheme="pink" onClick={onOpen}><AddIcon />Add New</Button>
+        <Button display="flex" justifyContent="space-around" w="140px" size="md" colorScheme="pink" onClick={onOpen}><AddIcon />Add New</Button>
         <Modal
           isOpen={isOpen}
           onClose={onClose}

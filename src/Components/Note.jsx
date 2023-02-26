@@ -7,10 +7,10 @@ import {
   Image,
   Flex,
 } from '@chakra-ui/react';
-import { DeleteIcon, CheckIcon } from '@chakra-ui/icons';
+import { DeleteIcon, CheckIcon, RepeatIcon } from '@chakra-ui/icons';
 import EditBtn from '../UI Components/EditBtn';
 
-const Note = ({ note, remove, completed, edit }) => {
+const Note = ({ note, changeCompleteStatus, remove, editNote }) => {
   return (
     <Box>
       <Container
@@ -41,50 +41,22 @@ const Note = ({ note, remove, completed, edit }) => {
           />
           <Text fontSize="lg">{note.importance}</Text>
         </Flex>
-        {note.completed ? (
-          <Flex justifyContent="space-between" maxW="15%">
-            <IconButton
-              colorScheme="pink"
-              aria-label="Complete"
-              icon={<CheckIcon />}
-              onClick={() => completed(note.id)}
-            />
-
-            <EditBtn edit={edit} id={note.id} note={note} />
-            <IconButton
-              colorScheme="pink"
-              aria-label="Delete"
-              icon={<DeleteIcon />}
-              onClick={() => remove(note)}
-            />
-          </Flex>
-        ) : (
-          <Flex justifyContent="space-between" maxW="15%">
-            <EditBtn edit={edit} id={note.id} note={note} />
-            <IconButton
-              colorScheme="pink"
-              aria-label="Delete"
-              icon={<DeleteIcon />}
-              onClick={() => remove(note)}
-            />
-          </Flex>
-        )}
-        {/* <Flex justifyContent="space-between" maxW="15%">
+        <Flex justifyContent="space-between" maxW="15%">
           <IconButton
-            colorScheme="pink"
+            colorScheme={note.completed ? 'messenger' : 'green'}
             aria-label="Complete"
-            icon={<CheckIcon />}
-            onClick={() => completed(note.id)}
+            icon={note.completed ? <RepeatIcon /> : <CheckIcon />}
+            onClick={() => changeCompleteStatus(note.id)}
           />
 
-          <EditBtn edit={edit} id={note.id} note={note} />
+          <EditBtn editNote={editNote} id={note.id} note={note} />
           <IconButton
             colorScheme="pink"
             aria-label="Delete"
             icon={<DeleteIcon />}
             onClick={() => remove(note)}
           />
-        </Flex> */}
+        </Flex>
       </Container>
     </Box>
   );

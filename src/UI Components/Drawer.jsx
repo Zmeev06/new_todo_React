@@ -11,8 +11,24 @@ import {
     useDisclosure,
   } from '@chakra-ui/react';
 
+const FILTERS = [
+  {
+    filter: 'all',
+    title: 'All Notes'
+  },
+  {
+    //completed false
+    filter: false,
+    title: 'Active Note',
+  },
+  {
+    //completed true
+    filter: true,
+    title: 'Completed Notes'
+  }
+]
   
-const MyDrawer = ({filter}) => {
+const MyDrawer = ({setFilter}) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -24,20 +40,13 @@ const MyDrawer = ({filter}) => {
             <DrawerContent>
               <DrawerHeader borderBottomWidth="1px">Choose Your Note List</DrawerHeader>
               <DrawerBody>
-                <Container borderBottom="1px solid #CBD5E0" mb="3" py="3">
-                    <Heading size="md" mb="2">All Notes</Heading>
-                    <Button colorScheme="pink" onClick={() => filter("all")}>Open</Button>
-                </Container>
-
-                <Container borderBottom="1px solid #CBD5E0" mb="3" py="3">
-                    <Heading size="md" mb="2">Active Notes</Heading>
-                    <Button colorScheme="pink" onClick={() => filter(true)}>Open</Button>
-                </Container>
-
-                <Container borderBottom="1px solid #CBD5E0" mb="3" py="3">
-                    <Heading size="md" mb="2">Completed Notes</Heading>
-                    <Button colorScheme="pink" onClick={() => filter(false)}>Open</Button>
-                </Container>
+                {
+                  FILTERS.map((item, i) => 
+                  <Container borderBottom="1px solid #CBD5E0" mb="3" py="3" key={i}>
+                    <Heading size="md" mb="2">{item.title}</Heading>
+                    <Button colorScheme="pink" onClick={() => setFilter(item.filter)}>Open</Button>
+                  </Container>)
+                }
               </DrawerBody>
             </DrawerContent>
           </Drawer>
