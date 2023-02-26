@@ -5,7 +5,7 @@ import NoteList from './Components/NoteList';
 
 function App() {
   const [notes, setNotes] = useState([
-    { id: 1, body: 'cdscd', importance: 'minor', status: true },
+    { id: 1, body: 'cdscd', importance: 'minor', status: "active" },
   ]);
 
   const [activeFilter, setActiveFilter] = React.useState('all');
@@ -13,12 +13,12 @@ function App() {
   const createNote = (body, importance) => {
     setNotes([
       ...notes,
-      { id: Date.now(), body: body, importance: importance, status: true },
+      { id: Date.now(), body: body, importance: importance, status: "active" },
     ]);
   };
 
-  const statusNote = id => {
-    setNotes(notes.map(e => (e.id === id ? { ...e, status: !e.status } : e)));
+  const setstatusNote = id => {
+    setNotes(notes.map(e => (e.id === id ? { ...e, status: "completed" } : e)));
   };
 
   const editNote = (id, body, importance) => {
@@ -29,10 +29,10 @@ function App() {
     );
   };
 
-  const getFilteredNotes = () => {
-    if (activeFilter === 'all') return notes;
-
-    return notes.filter(item => activeFilter && item.status);
+  const filteredNotes = () => {
+    return activeFilter === 'all'
+      ? notes
+      : notes.filter(item => item.status === activeFilter);
   };
 
   const removeNote = note => {
@@ -42,13 +42,14 @@ function App() {
   return (
     <ChakraProvider theme={theme}>
       <Header
-        counter={notes.length}
+        counter={filteredNotes().length}
         create={createNote}
         setFilter={setActiveFilter}
+        filter={activeFilter}
       />
       <NoteList
-        notes={getFilteredNotes}
-        status={statusNote}
+        notes={filteredNotes}
+        setstatus={setstatusNote}
         edit={editNote}
         remove={removeNote}
       />

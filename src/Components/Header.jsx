@@ -5,7 +5,7 @@ import { ColorModeSwitcher } from '../UI Components/ColorModeSwitcher';
 import NewNote from '../UI Components/NewNote';
 import MyDrawer from '../UI Components/Drawer';
 
-const Header = ({ counter, create, setFilter }) => {
+const Header = ({ counter, create, setFilter, filter }) => {
   return (
     <Box as="header">
       <Container maxW="container.lg" py="2">
@@ -15,7 +15,7 @@ const Header = ({ counter, create, setFilter }) => {
           borderBottom="1px solid #CBD5E0"
           pb="3"
         >
-          <MyDrawer setFilter={setFilter} />
+          <MyDrawer setFilter={setFilter} filter={filter} />
           <Heading>Your Todo List</Heading>
           <ColorModeSwitcher mt="3" />
         </Flex>

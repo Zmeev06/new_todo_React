@@ -11,7 +11,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
-const MyDrawer = ({ setFilter }) => {
+const MyDrawer = ({ setFilter, filter }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -26,32 +26,34 @@ const MyDrawer = ({ setFilter }) => {
             Choose Your Note List
           </DrawerHeader>
           <DrawerBody>
-            <Container borderBottom="1px solid #CBD5E0" mb="3" py="3">
-              <Heading size="md" mb="2">
-                All Notes
-              </Heading>
-              <Button colorScheme="pink" onClick={() => setFilter('all')}>
-                Open
-              </Button>
-            </Container>
-
-            <Container borderBottom="1px solid #CBD5E0" mb="3" py="3">
+            {filter === 'all' ? null : (
+              <Container borderBottom="1px solid #CBD5E0" mb="3" py="3">
+                <Heading size="md" mb="2">
+                  All Notes
+                </Heading>
+                <Button colorScheme="pink" onClick={() => setFilter('all')}>
+                  Open
+                </Button>
+              </Container>
+            )}
+            {filter === "active" ? null : <Container borderBottom="1px solid #CBD5E0" mb="3" py="3">
               <Heading size="md" mb="2">
                 Active Notes
               </Heading>
-              <Button colorScheme="pink" onClick={() => setFilter(true)}>
+              <Button colorScheme="pink" onClick={() => setFilter("active")}>
                 Open
               </Button>
-            </Container>
-
-            <Container borderBottom="1px solid #CBD5E0" mb="3" py="3">
+            </Container> }
+            
+            {filter === "completed" ? null :<Container borderBottom="1px solid #CBD5E0" mb="3" py="3">
               <Heading size="md" mb="2">
                 Completed Notes
               </Heading>
-              <Button colorScheme="pink" onClick={() => setFilter(false)}>
+              <Button colorScheme="pink" onClick={() => setFilter("completed")}>
                 Open
               </Button>
-            </Container>
+            </Container>}
+            
           </DrawerBody>
         </DrawerContent>
       </Drawer>
