@@ -1,24 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ChakraProvider, theme } from '@chakra-ui/react';
 import Header from './Components/Header';
 import NoteList from './Components/NoteList';
 
 function App() {
-  const [notes, setNotes] = useState([
-    { id: 1, body: 'cdscd', importance: 'minor', status: "active" },
-  ]);
+  const [notes, setNotes] = useState(
+    localStorage.getItem('notes')
+      ? JSON.parse(localStorage.getItem('notes'))
+      : []
+  );
+
+  useEffect(() => {
+    localStorage.setItem('notes', JSON.stringify(notes));
+  }, [notes]);
 
   const [activeFilter, setActiveFilter] = React.useState('all');
 
   const createNote = (body, importance) => {
     setNotes([
       ...notes,
-      { id: Date.now(), body: body, importance: importance, status: "active" },
+      { id: Date.now(), body: body, importance: importance, status: 'active' },
     ]);
   };
 
   const setstatusNote = id => {
-    setNotes(notes.map(e => (e.id === id ? { ...e, status: "completed" } : e)));
+    setNotes(notes.map(e => (e.id === id ? { ...e, status: 'completed' } : e)));
   };
 
   const editNote = (id, body, importance) => {
@@ -52,6 +58,7 @@ function App() {
         setstatus={setstatusNote}
         edit={editNote}
         remove={removeNote}
+        filter={activeFilter}
       />
     </ChakraProvider>
   );
